@@ -101,7 +101,7 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
       </div>
     </div>
 
-    <div v-if="tableGenerated" class="mt-4 ">
+    <div v-if="tableGenerated" class="mt-4 " ref="table">
       <table
           :style="{width: tableWidth}"
           class="w-full border-collapse border border-gray-300 transition-all duration-500"
@@ -208,32 +208,13 @@ export default {
     // infine rimuove l'elemento textarea temporaneo.
     // Nota: Questa funzione richiede l'accesso al DOM e non è testabile con Jest.
     copyTableToClipboard() {
-      const tableText = this.generateTableText();
+      const tableText = this.$refs.table.innerHTML;
       const textArea = document.createElement('textarea');
       textArea.value = tableText;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
       document.body.removeChild(textArea);
-    },
-
-    // Questa funzione genera una stringa di testo che rappresenta la tabella dei CVE.
-    // Inizia creando una stringa vuota per contenere il testo della tabella.
-    // Itera attraverso le righe della tabella usando il metodo forEach(),
-    // per ogni riga itera attraverso le celle usando un altro forEach(),
-    // aggiungendo il valore di ogni cella alla stringa di testo della tabella,
-    // separando ogni valore di cella con una tabulazione "\t".
-    // Alla fine di ogni riga, aggiunge un carattere di ritorno a capo "\n" alla stringa di testo della tabella.
-    // Restituisce la stringa di testo della tabella generata.
-    generateTableText() {
-      let tableText = '';
-      this.tableData.forEach(row => {
-        row.forEach(cell => {
-          tableText += cell.value + '\t';
-        });
-        tableText = tableText.trim() + '\n';
-      });
-      return tableText;
     },
 
     downloadCSV() {

@@ -47,24 +47,6 @@ describe('CveTable', () => {
     // testare le funzioni generateTableText e generateCSVContent, che
     // sono utilizzate da quelle funzioni.
 
-    test('Genera correttamente il testo della tabella', () => {
-        wrapper.setData({
-            tableData: [
-                [
-                    {value: 'CVE-2023-21524', valid: true},
-                    {value: 'CVE-2023-21560', valid: true},
-                ],
-                [
-                    {value: 'CVE-2023-21744', valid: true},
-                    {value: 'CVE-2023-21762', valid: true},
-                ],
-            ],
-        });
-
-        const expectedTableText = `CVE-2023-21524\tCVE-2023-21560\nCVE-2023-21744\tCVE-2023-21762\n`;
-        expect(wrapper.vm.generateTableText()).toEqual(expectedTableText);
-    });
-
     test('Genera correttamente il contenuto CSV', () => {
         wrapper.setData({
             tableData: [

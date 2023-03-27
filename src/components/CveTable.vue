@@ -8,13 +8,32 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
 - La tabella generata, contenente la lista di CVEs.
 -->
 <template>
+  <header class="flex items-center justify-between bg-gray-800 py-3 px-4 text-white">
+    <h1 class="text-lg font-semibold">Tool per la formattazione di una lista CVE</h1>
+    <a href="https://github.com/sidis405/stw-trandafili"
+       class="text-gray-400 hover:text-white">
+      <svg class="w-6 h-6 fill-current" viewBox="0 0 16 16">
+        <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.47-2.7-1.08-2.7-1.08-.37-.94-.91-1.19-.91-1.19-.74-.5.06-.49.06-.49.82.06 1.25.84 1.25.84.73 1.25 1.91.89 2.38.68.07-.53.28-.89.51-1.1-1.78-.2-3.65-.89-3.65-3.96 0-.88.31-1.6.84-2.16-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.03 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.53.56.84 1.27.84 2.16 0 3.07-1.87 3.76-3.65 3.96.29.25.54.74.54 1.49v2.21c0 .22.14.46.55.38C13.71 14.53 16 11.54 16 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+    </a>
+  </header>
+
   <div class="p-4 container mx-auto">
     <!-- Intestazione fissa -->
     <div class="fixed bottom-0 left-0 right-0 z-40 px-4 py-3 text-center text-white bg-gray-800">
       Prova pratica STW - Sidrit Trandafili
     </div>
     <!-- Titolo e descrizione del tool -->
-    <h2 class="text-base font-semibold leading-7 text-gray-900">Tool per la formattazione di una lista CVE</h2>
+    <div class="flex justify-between">
+      <h2 class="text-base font-semibold leading-7 text-gray-900">Tool per la formattazione di una lista CVE</h2>
+
+      <div>
+        <a class="text-sm text-blue-400 mr-4" href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip">Scarica ZIP Codice</a>
+        <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili">Visualizza su Github</a>
+      </div>
+    </div>
+
     <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">Incolla la lista CVE, uno per riga, configura le opzioni e
       genera la tabella</p>
     <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">A seguito potrai copiare la tabella in memoria o scaricarla

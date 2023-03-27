@@ -9,7 +9,7 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
 -->
 <template>
   <header class="flex items-center justify-between bg-gray-800 py-3 px-4 text-white">
-    <h1 class="text-lg font-semibold">Tool per la formattazione di una lista CVE</h1>
+    <h1 class="text-lg font-semibold">CVE Tool</h1>
     <a href="https://github.com/sidis405/stw-trandafili"
        class="text-gray-400 hover:text-white">
       <svg class="w-6 h-6 fill-current" viewBox="0 0 16 16">
@@ -29,6 +29,7 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
       <h2 class="text-base font-semibold leading-7 text-gray-900">Tool per la formattazione di una lista CVE</h2>
 
       <div>
+        <a class="text-sm text-red-400 mr-4" href="/relazione-sul-progetto.pdf">Visualizza relazione</a>
         <a class="text-sm text-blue-400 mr-4" href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip">Scarica ZIP Codice</a>
         <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili">Visualizza su Github</a>
       </div>

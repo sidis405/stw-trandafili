@@ -1,14 +1,14 @@
 <template>
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <CveTable />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CveTable from './components/CveTable.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CveTable
   }
 }
 </script>

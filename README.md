@@ -44,7 +44,7 @@ Durante lo sviluppo del progetto, sono state implementate tutte le funzionalità
 - Aggiungere una funzione di ricerca o filtraggio per permettere agli utenti di trovare facilmente specifici CVE nella tabella.
 - Implementare la paginazione per gestire un gran numero di CVE, migliorando così le prestazioni e l’esperienza utente.
 
-Durante lo sviluppo del componente, non sono state riscontrate criticità significative. Tuttavia, è importante notare che i test per le funzioni copyTableToClipboard e downloadCSV sono difficili da eseguire a causa delle interazioni con il DOM e il sistema dei file, che non sono facilmente accessibili durante i test. Invece, sono stati testati i metodi generateTableText e generateCSVContent che vengono utilizzati da queste funzioni.
+Durante lo sviluppo del componente, non sono state riscontrate criticità significative. Tuttavia, è importante notare che i test per le funzioni copyTableToClipboard e downloadCSV sono difficili da eseguire a causa delle interazioni con il DOM e il sistema dei file, che non sono facilmente accessibili durante i test. Invece, sono stati testati i metodi generateTable e generateCSVContent che vengono utilizzati da queste funzioni.
 
 
 ## Project setup

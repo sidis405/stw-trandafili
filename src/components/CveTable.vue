@@ -54,6 +54,9 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
       <!-- Messaggio di errore in caso di input non valido -->
       <p v-if="invalidCVEs.length > 0" class="mt-1 text-sm text-red-600">I seguenti CVE non sono validi:
         {{ invalidCVEs.join(', ') }}</p>
+
+      <p v-if="duplicateCVEs.length > 0" class="mt-1 text-sm text-blue-600">I seguenti CVE hanno duplicati:
+        {{ duplicateCVEs.join(', ') }}. L'output è stato ottimizzato</p>
     </div>
     <!-- Selezione del numero di colonne e larghezza della tabella -->
     <div class="flex mb-4 gap-3">
@@ -188,6 +191,7 @@ export default {
       tableData: [], //  è una matrice che rappresenta i dati della tabella generati a partire dalla lista di CVE inserita.
       tableGenerated: false, // è un booleano che indica se la tabella è stata generata o meno.
       invalidCVEs: [], //  è una lista che contiene le CVE non valide inserite dall'utente.
+      duplicateCVEs: [], //  è una lista che contiene le CVE duplicate inserite dall'utente.
       showTableCodeArea: false, //  è un booleano che indica se mostrare o meno il codice HTML della tabella nell'input apposio.
       codeCopied: false, //  è un booleano che indica se il codice HTML della tabella è stato copiato o meno.
     };
@@ -228,7 +232,9 @@ export default {
     generateTable() {
       if (this.invalidCVEs.length > 0) return;
 
-      const cves = this.validateCVEs();
+      let cves = this.validateCVEs();
+      cves = this.filterOutDuplicateCVEs(cves);
+
       if (!cves) return;
 
       const numRows = Math.ceil(cves.length / this.numColumns);
@@ -313,16 +319,51 @@ export default {
       return csvContent;
     },
 
+    // seleziona il testo contenuto all'interno dell'elemento HTML codeArea
     selectTableCode() {
       this.$refs.codeArea.select();
     },
+
+    // Mostra il feedback di copia del codice per 3 secondi
     notifyCopied() {
       this.codeCopied = true;
       let _that = this;
       setTimeout(function () {
         _that.codeCopied = false;
       }, 3000);
+    },
+
+    // Questa funzione rimuove i duplicati dall'array di CVE passato come parametro.
+    filterOutDuplicateCVEs(cves) {
+      // Restituisce l'array iniziale se non ci sono elementi nell'array.
+      if (cves.length === 0) return cves;
+
+      // Rimuove i duplicati dall'array originale.
+      let uniqueCves = [...new Set(cves)];
+
+      // Crea una mappa per tenere traccia del numero di occorrenze di ogni elemento nell'array.
+      let map = new Map();
+
+      // Aggiorna la mappa con il conteggio di ogni elemento nell'array originale.
+      cves.forEach(cve => {
+        if (map.has(cve)) {
+          map.set(cve, map.get(cve) + 1);
+        } else {
+          map.set(cve, 1);
+        }
+      })
+
+      // Aggiunge gli elementi duplicati all'array "duplicateCVEs" del componente.
+      map.forEach((value, key) => {
+        if (value > 1) {
+          this.duplicateCVEs.push(key);
+        }
+      })
+
+      // Restituisce l'array di elementi univoci.
+      return uniqueCves;
     }
+
   },
 };
 </script>

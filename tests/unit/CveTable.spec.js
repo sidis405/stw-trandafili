@@ -65,6 +65,12 @@ describe('CveTable', () => {
         expect(wrapper.vm.generateCSVContent()).toEqual(expectedCSVContent);
     });
 
+    // Il test in questione controlla se il componente è in grado di mostrare e
+    // nascondere correttamente il codice della tabella quando si fa clic sul pulsante "toggle-table-code".
+    // Il test utilizza il metodo setData per impostare le proprietà del componente e il metodo $nextTick
+    // per attendere che le modifiche vengano applicate. Successivamente,
+    // il test trova il pulsante tramite il selettore "#toggle-table-code"
+    // e lo attiva tramite il metodo trigger('click').
     test('Mostra/nasconde il codice tabella correttamente', async () => {
         wrapper.setData({
             showTableCodeArea: false,
@@ -90,5 +96,46 @@ describe('CveTable', () => {
         button.trigger('click');
 
         expect(wrapper.vm.showTableCodeArea).toBe(false);
+    });
+
+
+    // Il test verifica se il metodo filterOutDuplicateCVEs del componente funziona correttamente.
+    // In particolare, si vuole verificare che il metodo elimini correttamente gli elementi duplicati
+    // dall'array di input e aggiunga gli elementi che presentano duplicati all'array duplicateCVEs.
+    it('Rimuove CVE duplicati e aggiunge gli CVE che presentano duplicati al duplicateCVEs array', () => {
+        const cves = ['CVE-2020-1234', 'CVE-2020-1234', 'CVE-2021-5678', 'CVE-2022-9999'];
+        const expectedUniqueCves = ['CVE-2020-1234', 'CVE-2021-5678', 'CVE-2022-9999'];
+        const expectedDuplicateCVEs = ['CVE-2020-1234'];
+
+        const uniqueCves = wrapper.vm.filterOutDuplicateCVEs(cves);
+
+        expect(uniqueCves).toEqual(expectedUniqueCves);
+        expect(wrapper.vm.duplicateCVEs).toEqual(expectedDuplicateCVEs);
+    });
+
+    // Test di verifica se il metodo filterOutDuplicateCVEs del componente restituisce l'array iniziale
+    // passato come parametro se non ci sono elementi duplicati. Viene creato un array cves senza elementi
+    // duplicati e viene verificato che la variabile uniqueCves restituita dal metodo sia uguale all'array cves
+    // e che la variabile duplicateCVEs sia un array vuoto.
+    it('Restituisce l\'array iniziale se non ci sono duplicati', () => {
+        const cves = ['CVE-2020-1234', 'CVE-2021-5678', 'CVE-2022-9999'];
+
+        const uniqueCves = wrapper.vm.filterOutDuplicateCVEs(cves);
+
+        expect(uniqueCves).toEqual(cves);
+        expect(wrapper.vm.duplicateCVEs).toEqual([]);
+    });
+
+    // Test che controlla che se l'array passato alla funzione filterOutDuplicateCVEs()
+    // è vuoto, allora la funzione restituisce un array vuoto e l'array duplicateCVEs nel componente è anche vuoto.
+    // Ciò significa che se non ci sono elementi nell'array, non ci saranno duplicati da rimuovere e
+    // l'array rimarrà vuoto.
+    it('Restituisce un array vuoto se l\'array originale è vuoto', () => {
+        const cves = [];
+
+        const uniqueCves = wrapper.vm.filterOutDuplicateCVEs(cves);
+
+        expect(uniqueCves).toEqual([]);
+        expect(wrapper.vm.duplicateCVEs).toEqual([]);
     });
 });

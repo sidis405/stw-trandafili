@@ -12,6 +12,10 @@ Il progetto consiste nella realizzazione di un componente Vue.js che permetta di
 L’obiettivo principale è fornire un’interfaccia semplice ed efficiente per l’inserimento e la visualizzazione di un elenco di CVE, supportando la validazione, la generazione di una tabella.
 Inoltre, il progetto include anche le funzionalità di l’esportazione dei dati in formato CSV e la copia in memoria.
 
+> Rev 1:   
+- Implementazione: Il componente permette di visualizzare una textarea che mostra il codice della tabella generata
+- Addendum: I codici duplicati vengono rimossi
+
 ### Il componente Vue.js è stato implementato utilizzando le seguenti tecnologie e librerie:
 
 - **Vue.js** per la gestione delle funzionalità del componente e l’interazione con l’utente

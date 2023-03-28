@@ -30,12 +30,16 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
 
       <div>
         <a class="text-sm text-red-400 mr-4" href="/relazione-sul-progetto.pdf" target="_blank">Relazione</a>
-        <a class="text-sm text-blue-400 mr-4" href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip" target="_blank">Scarica ZIP Codice</a>
-        <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili" target="_blank">Visualizza su Github</a>
+        <a class="text-sm text-blue-400 mr-4"
+           href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip" target="_blank">Scarica ZIP
+          Codice</a>
+        <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili" target="_blank">Visualizza su
+          Github</a>
       </div>
     </div>
 
-    <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">Incolla la lista CVE, uno per riga e configura le opzioni.<br/>A seguito potrai generare la tabella, copiarla in memoria o scaricarla
+    <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">Incolla la lista CVE, uno per riga e configura le opzioni.<br/>A
+      seguito potrai generare la tabella, copiarla in memoria o scaricarla
       come CSV</p>
     <!-- Form per l'input della lista di CVE -->
     <div class="mb-4">
@@ -94,18 +98,6 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
 
       <div v-if="tableGenerated">
         <button
-            @click="copyTableToClipboard"
-            class="bg-green-500 text-white px-4 py-2 rounded mr-2"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-               stroke="currentColor"
-               class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
-          </svg>
-
-        </button>
-        <button
             @click="downloadCSV"
             class="bg-yellow-500 text-white px-4 py-2 rounded"
         >
@@ -119,31 +111,68 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
       </div>
     </div>
 
-    <div v-if="tableGenerated" class="mt-4 " ref="table">
-      <table
-          :style="{width: tableWidth}"
-          class="w-full border-collapse border border-gray-300 transition-all duration-500"
-      >
-        <thead>
-        <tr>
-          <th class="font-bold text-center p-3" :colspan="numColumns">CVE-IDs</th>
-        </tr>
-        </thead>
-        <tr v-for="(row, rowIndex) in tableData" :key="rowIndex" class="even:bg-white odd:bg-gray-200">
-          <td
-              v-for="(cell, cellIndex) in row"
-              :key="cellIndex"
-              :class="{
+    <div v-if="tableGenerated" class="mt-4 ">
+
+      <div ref="table">
+        <table
+            :style="{width: tableWidth}"
+            class="w-full border-collapse border border-gray-300 transition-all duration-500"
+        >
+          <thead>
+          <tr>
+            <th class="font-bold text-center p-3" :colspan="numColumns">CVE-IDs</th>
+          </tr>
+          </thead>
+          <tr v-for="(row, rowIndex) in tableData" :key="rowIndex" class="even:bg-white odd:bg-gray-200">
+            <td
+                v-for="(cell, cellIndex) in row"
+                :key="cellIndex"
+                :class="{
               'invalid-cve': !cell.valid,
               'border': true,
               'border-gray-300': true,
               'p-2': true,
             }"
+            >
+              {{ cell.value }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="flex justify-between mt-4">
+        <button
+            @click="showTableCodeArea = !showTableCodeArea"
+            id="toggle-table-code"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            v-html="showTableCodeArea ? 'Nascondi codice' : 'Mostra codice'"
+        ></button>
+
+        <div class="flex items-center" v-if="showTableCodeArea">
+          <span class="mr-2 text-sm text-green-800 italic" v-if="codeCopied">Codice tabella copiato</span>
+          <button
+              @click="copyTableToClipboard"
+              class="bg-green-500 text-white px-4 py-2 rounded mr-2"
           >
-            {{ cell.value }}
-          </td>
-        </tr>
-      </table>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor"
+                 class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <textarea
+          ref="codeArea"
+          v-if="showTableCodeArea"
+          @click="selectTableCode"
+          v-text="$refs.table.innerHTML"
+          rows="10"
+          readonly
+          :class="`block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5 sm:text-sm sm:leading-6 mt-4`"
+      ></textarea>
     </div>
   </div>
 </template>
@@ -159,6 +188,8 @@ export default {
       tableData: [], //  è una matrice che rappresenta i dati della tabella generati a partire dalla lista di CVE inserita.
       tableGenerated: false, // è un booleano che indica se la tabella è stata generata o meno.
       invalidCVEs: [], //  è una lista che contiene le CVE non valide inserite dall'utente.
+      showTableCodeArea: false, //  è un booleano che indica se mostrare o meno il codice HTML della tabella nell'input apposio.
+      codeCopied: false, //  è un booleano che indica se il codice HTML della tabella è stato copiato o meno.
     };
   },
   methods: {
@@ -181,6 +212,7 @@ export default {
           } else {
             this.invalidCVEs.push(trimmedLine);
             this.tableGenerated = false;
+            this.showTableCodeArea = false;
           }
         }
       }
@@ -233,6 +265,8 @@ export default {
       textArea.select();
       document.execCommand('copy');
       document.body.removeChild(textArea);
+      this.selectTableCode();
+      this.notifyCopied();
     },
 
     downloadCSV() {
@@ -278,6 +312,17 @@ export default {
       });
       return csvContent;
     },
+
+    selectTableCode() {
+      this.$refs.codeArea.select();
+    },
+    notifyCopied() {
+      this.codeCopied = true;
+      let _that = this;
+      setTimeout(function () {
+        _that.codeCopied = false;
+      }, 3000);
+    }
   },
 };
 </script>

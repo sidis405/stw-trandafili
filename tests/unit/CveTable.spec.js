@@ -64,4 +64,31 @@ describe('CveTable', () => {
         const expectedCSVContent = `"CVE-2023-21524","CVE-2023-21560"\n"CVE-2023-21744","CVE-2023-21762"\n`;
         expect(wrapper.vm.generateCSVContent()).toEqual(expectedCSVContent);
     });
+
+    test('Mostra/nasconde il codice tabella correttamente', async () => {
+        wrapper.setData({
+            showTableCodeArea: false,
+            tableData: [
+                [
+                    {value: 'CVE-2023-21524', valid: true},
+                    {value: 'CVE-2023-21560', valid: true},
+                ],
+                [
+                    {value: 'CVE-2023-21744', valid: true},
+                    {value: 'CVE-2023-21762', valid: true},
+                ],
+            ],
+            tableGenerated: true,
+        });
+
+        await wrapper.vm.$nextTick();
+        const button = wrapper.find('#toggle-table-code');
+        button.trigger('click');
+
+        expect(wrapper.vm.showTableCodeArea).toBe(true);
+
+        button.trigger('click');
+
+        expect(wrapper.vm.showTableCodeArea).toBe(false);
+    });
 });

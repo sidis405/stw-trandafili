@@ -25,19 +25,17 @@ Il template HTML del componente ToolCveList è diviso in diverse sezioni:
       Prova pratica STW - Sidrit Trandafili
     </div>
     <!-- Titolo e descrizione del tool -->
-    <div class="flex justify-between">
+    <div class="flex justify-between flex-col md:flex-row mb-4 md:mb-0">
       <h2 class="text-base font-semibold leading-7 text-gray-900">Tool per la formattazione di una lista CVE</h2>
 
       <div>
-        <a class="text-sm text-red-400 mr-4" href="/relazione-sul-progetto.pdf">Visualizza relazione</a>
-        <a class="text-sm text-blue-400 mr-4" href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip">Scarica ZIP Codice</a>
-        <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili">Visualizza su Github</a>
+        <a class="text-sm text-red-400 mr-4" href="/relazione-sul-progetto.pdf" target="_blank">Relazione</a>
+        <a class="text-sm text-blue-400 mr-4" href="https://github.com/sidis405/stw-trandafili/archive/refs/heads/main.zip" target="_blank">Scarica ZIP Codice</a>
+        <a class="text-sm text-blue-400" href="https://github.com/sidis405/stw-trandafili" target="_blank">Visualizza su Github</a>
       </div>
     </div>
 
-    <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">Incolla la lista CVE, uno per riga, configura le opzioni e
-      genera la tabella</p>
-    <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">A seguito potrai copiare la tabella in memoria o scaricarla
+    <p class="mt-1 mb-2 text-sm leading-6 text-gray-600">Incolla la lista CVE, uno per riga e configura le opzioni.<br/>A seguito potrai generare la tabella, copiarla in memoria o scaricarla
       come CSV</p>
     <!-- Form per l'input della lista di CVE -->
     <div class="mb-4">

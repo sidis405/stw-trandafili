@@ -2,13 +2,7 @@
 module.exports = {
     purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
     content: [],
-    theme: {
-        extend: {
-            transitionProperty: {
-                width: "width"
-            }
-        }
-    },
+    theme: {},
     plugins: [
         require('@tailwindcss/forms'),
     ],
